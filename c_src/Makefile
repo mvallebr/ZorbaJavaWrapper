@@ -10,6 +10,7 @@ LDFLAGS=-L/usr/lib -L. -lzorba_simplestore
 
 default: clean all
 
+
 swig:
 	swig -java -outdir ../src-gen ZorbaJavaWrapperSWIG.i
 	#mv ZorbaJavaWrapperSWIG_wrap.cxx ZorbaJavaWrapperSWIG_wrap.cc
