@@ -13,10 +13,6 @@ public class ZorbaJavaWrapperSWIG {
     return ZorbaJavaWrapperSWIGJNI.create_transformation(transformationQuery);
   }
 
-  public static void connect(int instance) {
-    ZorbaJavaWrapperSWIGJNI.connect(instance);
-  }
-
   public static String transform_data(int instance, String data) {
     return ZorbaJavaWrapperSWIGJNI.transform_data(instance, data);
   }

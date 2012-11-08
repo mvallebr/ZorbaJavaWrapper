@@ -13,8 +13,8 @@ default: clean all
 
 swig:	
 	mkdir -p ../src-gen/br/com/s1mbi0se/zorbawrapper
-	swig -java -package br.com.s1mbi0se.zorbawrapper -outdir ../src-gen/br/com/s1mbi0se/zorbawrapper ZorbaJavaWrapperSWIG.i	
-	$(CXX) $(CXXFLAGS) -c -o ZorbaJavaWrapperSWIG_wrap.o ZorbaJavaWrapperSWIG_wrap.c
+	swig -c++ -java -package br.com.s1mbi0se.zorbawrapper -outdir ../src-gen/br/com/s1mbi0se/zorbawrapper ZorbaJavaWrapperSWIG.i	
+	$(CXX) $(CXXFLAGS) -c -o ZorbaJavaWrapperSWIG_wrap.o ZorbaJavaWrapperSWIG_wrap.cxx
 
 all: swig $(LIBOBJS) $(OBJS) 	
 	$(CXX) -shared $(LIBOBJS) $(SWIG_OBJS) -o lib$(PROGNAME).so $(LDFLAGS)  
