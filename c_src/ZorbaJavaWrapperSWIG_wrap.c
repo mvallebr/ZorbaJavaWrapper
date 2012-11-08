@@ -188,77 +188,73 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 
 
  /* Put header files here or function declarations like below */
- extern double My_variable;
- extern int fact(int n);
- extern int my_mod(int x, int y);
- extern char *get_time();
+ extern int create_transformation(char *transformationQuery);
+ extern void connect(int instance);
+ extern char *transform_data(int instance, char *data);
+ extern void disconnect(int instance);
  
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-SWIGEXPORT void JNICALL Java_ZorbaJavaWrapperSWIGJNI_My_1variable_1set(JNIEnv *jenv, jclass jcls, jdouble jarg1) {
-  double arg1 ;
-  
-  (void)jenv;
-  (void)jcls;
-  arg1 = (double)jarg1; 
-  My_variable = arg1;
-}
-
-
-SWIGEXPORT jdouble JNICALL Java_ZorbaJavaWrapperSWIGJNI_My_1variable_1get(JNIEnv *jenv, jclass jcls) {
-  jdouble jresult = 0 ;
-  double result;
-  
-  (void)jenv;
-  (void)jcls;
-  result = (double)My_variable;
-  jresult = (jdouble)result; 
-  return jresult;
-}
-
-
-SWIGEXPORT jint JNICALL Java_ZorbaJavaWrapperSWIGJNI_fact(JNIEnv *jenv, jclass jcls, jint jarg1) {
+SWIGEXPORT jint JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_create_1transformation(JNIEnv *jenv, jclass jcls, jstring jarg1) {
   jint jresult = 0 ;
-  int arg1 ;
+  char *arg1 = (char *) 0 ;
   int result;
   
   (void)jenv;
   (void)jcls;
-  arg1 = (int)jarg1; 
-  result = (int)fact(arg1);
+  arg1 = 0;
+  if (jarg1) {
+    arg1 = (char *)(*jenv)->GetStringUTFChars(jenv, jarg1, 0);
+    if (!arg1) return 0;
+  }
+  result = (int)create_transformation(arg1);
   jresult = (jint)result; 
+  if (arg1) (*jenv)->ReleaseStringUTFChars(jenv, jarg1, (const char *)arg1);
   return jresult;
 }
 
 
-SWIGEXPORT jint JNICALL Java_ZorbaJavaWrapperSWIGJNI_my_1mod(JNIEnv *jenv, jclass jcls, jint jarg1, jint jarg2) {
-  jint jresult = 0 ;
+SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_connect(JNIEnv *jenv, jclass jcls, jint jarg1) {
   int arg1 ;
-  int arg2 ;
-  int result;
   
   (void)jenv;
   (void)jcls;
   arg1 = (int)jarg1; 
-  arg2 = (int)jarg2; 
-  result = (int)my_mod(arg1,arg2);
-  jresult = (jint)result; 
-  return jresult;
+  connect(arg1);
 }
 
 
-SWIGEXPORT jstring JNICALL Java_ZorbaJavaWrapperSWIGJNI_get_1time(JNIEnv *jenv, jclass jcls) {
+SWIGEXPORT jstring JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_transform_1data(JNIEnv *jenv, jclass jcls, jint jarg1, jstring jarg2) {
   jstring jresult = 0 ;
+  int arg1 ;
+  char *arg2 = (char *) 0 ;
   char *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  result = (char *)get_time();
+  arg1 = (int)jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)(*jenv)->GetStringUTFChars(jenv, jarg2, 0);
+    if (!arg2) return 0;
+  }
+  result = (char *)transform_data(arg1,arg2);
   if (result) jresult = (*jenv)->NewStringUTF(jenv, (const char *)result);
+  if (arg2) (*jenv)->ReleaseStringUTFChars(jenv, jarg2, (const char *)arg2);
   return jresult;
+}
+
+
+SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_disconnect(JNIEnv *jenv, jclass jcls, jint jarg1) {
+  int arg1 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = (int)jarg1; 
+  disconnect(arg1);
 }
 
 

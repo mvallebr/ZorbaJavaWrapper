@@ -23,6 +23,31 @@
 #include <zorba/singleton_item_sequence.h>
 #include <zorba/zorba_exception.h>
 
+#ifdef __cplusplus
+extern "C" {
+#endif
+#include <stdio.h> 
+int create_transformation(char *transformationQuery) {
+	printf("create_transformation '%s'\n", transformationQuery);
+	return 1;
+}
+
+void connect(int instance) {
+	printf("connect %d \n", instance);
+}
+
+char *transform_data(int instance, char *data) {
+	printf("transform_data %d '%s'\n", instance, data);
+	return NULL;
+}
+
+void disconnect(int instance) {
+	printf("disconnect %d \n", instance);
+}
+
+#ifdef __cplusplus
+}
+#endif
 
 using namespace zorba;
 

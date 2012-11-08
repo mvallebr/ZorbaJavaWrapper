@@ -1,14 +1,14 @@
 %module ZorbaJavaWrapperSWIG
  %{
  /* Put header files here or function declarations like below */
- extern double My_variable;
- extern int fact(int n);
- extern int my_mod(int x, int y);
- extern char *get_time();
+ extern int create_transformation(char *transformationQuery);
+ extern void connect(int instance);
+ extern char *transform_data(int instance, char *data);
+ extern void disconnect(int instance);
  %}
  
- extern double My_variable;
- extern int fact(int n);
- extern int my_mod(int x, int y);
- extern char *get_time();
+ extern int create_transformation(char *transformationQuery);
+ extern void connect(int instance);
+ extern char *transform_data(int instance, char *data);
+ extern void disconnect(int instance);
  

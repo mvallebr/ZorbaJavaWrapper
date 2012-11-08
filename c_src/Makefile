@@ -11,14 +11,14 @@ LDFLAGS=-L/usr/lib -L. -lzorba_simplestore
 default: clean all
 
 
-swig:
-	swig -java -outdir ../src-gen ZorbaJavaWrapperSWIG.i
-	#mv ZorbaJavaWrapperSWIG_wrap.cxx ZorbaJavaWrapperSWIG_wrap.cc
+swig:	
+	mkdir -p ../src-gen/br/com/s1mbi0se/zorbawrapper
+	swig -java -package br.com.s1mbi0se.zorbawrapper -outdir ../src-gen/br/com/s1mbi0se/zorbawrapper ZorbaJavaWrapperSWIG.i	
 	$(CXX) $(CXXFLAGS) -c -o ZorbaJavaWrapperSWIG_wrap.o ZorbaJavaWrapperSWIG_wrap.c
 
 all: swig $(LIBOBJS) $(OBJS) 	
 	$(CXX) -shared $(LIBOBJS) $(SWIG_OBJS) -o lib$(PROGNAME).so $(LDFLAGS)  
-	$(CXX) $(OBJS) $(LIBOBJS) -o $(PROGNAME) $(LDFLAGS)
+	$(CXX) $(OBJS) -o $(PROGNAME) $(LDFLAGS) -L. -l$(PROGNAME) 
 	ldd $(PROGNAME)
 
 clean: 
