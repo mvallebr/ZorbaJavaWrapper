@@ -17,6 +17,7 @@
 #include <iostream>
 #include <sstream>
 #include <string>
+#include <map>
 
 #include <zorba/zorba.h>
 #include <zorba/store_manager.h>
@@ -30,8 +31,8 @@ using namespace zorba;
 int num_instances=0, instance_count=0;
 Zorba *lZorba=NULL;
 void* lStore=NULL;
-XQuery_t lQuery;
 std::string transformationResult;
+std::map<int,XQuery_t> queries;
 
 
 
@@ -45,9 +46,10 @@ int connect() {
 }
 
 void disconnect(int instance) {
+	XQuery_t lQuery = queries[instance];
+	lQuery->close();
 	num_instances--;
 	if (num_instances<=0){
-		lQuery->close();
 		lZorba->shutdown();
 		StoreManager::shutdownStore(lStore);	
 		lZorba=NULL;
@@ -59,12 +61,14 @@ void disconnect(int instance) {
 
 int create_transformation(char *transformationQuery) {
 	int instance = connect();
-	lQuery = lZorba->compileQuery(transformationQuery);
+	XQuery_t lQuery = lZorba->compileQuery(transformationQuery);
+	queries[instance] = lQuery;
 	return instance;
 }
 
 
 char *transform_data(int instance, char *data) {
+	XQuery_t lQuery = queries[instance];
 	ItemFactory* lFactory = lZorba->getItemFactory();
 	/* The item that is to be bound to the external variable */
 	Item lItem = lFactory->createString(data);
