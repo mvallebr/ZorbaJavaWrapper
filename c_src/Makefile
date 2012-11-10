@@ -18,9 +18,10 @@ swig:
 	$(CXX) $(CXXFLAGS) -c -o ZorbaJavaWrapperSWIG_wrap.o ZorbaJavaWrapperSWIG_wrap.cxx
 
 all: swig $(LIBOBJS) $(OBJS) 	
+	ln -s libzorba_simplestore.so.2.7.0 libzorba_simplestore.so
 	$(CXX) -shared $(LIBOBJS) $(SWIG_OBJS) -o lib$(PROGNAME).so $(LDFLAGS)  
 	$(CXX) $(OBJS) -o $(PROGNAME) $(LDFLAGS) -L. -l$(PROGNAME) 
 	ldd $(PROGNAME)
 
 clean: 
-	rm -f $(OBJS) $(LIBOBJS) $(PROGNAME) lib$(PROGNAME).so ZorbaJavaWrapperSWIG*.c* ZorbaJavaWrapperSWIG*.java
+	rm -f $(OBJS) $(LIBOBJS) $(PROGNAME) lib$(PROGNAME).so ZorbaJavaWrapperSWIG*.c* ZorbaJavaWrapperSWIG*.java libzorba_simplestore.so
