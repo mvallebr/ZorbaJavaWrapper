@@ -1,12 +1,13 @@
 CXX=colorgcc
 
 JAVA_HOME=/opt/jdk1.7.0_07
-CXXFLAGS=-Wall -O2 -I/usr/include/ -fPIC -I. -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux
+ZORBA_CFLAGS=-I/home/mvalle/Downloads/zorba-2.7.01/include/ -I/home/mvalle/Downloads/build1/include
+CXXFLAGS=-Wall -O2 -I/usr/include/ -fPIC -I. -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux $(ZORBA_CFLAGS)
 OBJS=ZorbaWrapperTest.o
 LIBOBJS=ZorbaWrapper.o
 SWIG_OBJS=ZorbaJavaWrapperSWIG_wrap.o
 PROGNAME=zorbawrapper
-LDFLAGS=-L/usr/lib -L. -lzorba_simplestore
+LDFLAGS=-L. -L/usr/lib -lzorba_simplestore
 
 default: clean all
 
