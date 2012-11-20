@@ -8,7 +8,7 @@ LIBOBJS=ZorbaWrapper.o
 SWIG_OBJS=ZorbaJavaWrapperSWIG_wrap.o
 PROGNAME=zorbawrapper
 LDFLAGS=-L. -L/usr/lib -lzorba_simplestore
-OUTPUT_LIB_DIR=.
+OUTPUT_LIB_DIR=../c_bin
 
 default: clean all
 
@@ -22,7 +22,10 @@ all: swig $(LIBOBJS) $(OBJS)
 	ln -s libzorba_simplestore.so.2.7.0 libzorba_simplestore.so
 	$(CXX) -shared $(LIBOBJS) $(SWIG_OBJS) -o $(OUTPUT_LIB_DIR)/lib$(PROGNAME).so $(LDFLAGS)  
 	$(CXX) $(OBJS) -o $(PROGNAME) $(LDFLAGS) -L$(OUTPUT_LIB_DIR) -l$(PROGNAME) 
-	ldd $(PROGNAME)
+	ldd $(OUTPUT_LIB_DIR)/libzorbawrapper.so | cut -d">" -f 2 | cut -d "(" -f 1 > $(OUTPUT_LIB_DIR)/dll_deps
+	for x in `cat $(OUTPUT_LIB_DIR)/dll_deps`; do cp $$x $(OUTPUT_LIB_DIR)/; done
+	cat $(OUTPUT_LIB_DIR)/dll_deps
+	ls $(OUTPUT_LIB_DIR)
 
 clean: 
 	rm -f $(OBJS) $(LIBOBJS) $(PROGNAME) lib$(PROGNAME).so ZorbaJavaWrapperSWIG*.c* ZorbaJavaWrapperSWIG*.java libzorba_simplestore.so
