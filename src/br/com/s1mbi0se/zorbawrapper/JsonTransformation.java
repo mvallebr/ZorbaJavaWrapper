@@ -51,6 +51,7 @@ public class JsonTransformation {
 			System.load(fileOut.toString());// loading goes here
 			System.out.println(" ----> DLL " + name + " loaded successfully");
 			System.out.println(" ============================================");
+			System.out.flush();
 		} catch (Exception e) {
 			e.printStackTrace();
 			throw new JsonTransformationException("Could not load library '"
