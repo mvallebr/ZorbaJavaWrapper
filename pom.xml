@@ -5,6 +5,11 @@
 	<artifactId>ZorbaJavaWrapper</artifactId>
 	<version>0.1</version>
 	<build>
+		<resources>
+			<resource>
+				<directory>c_bin</directory>
+			</resource>
+		</resources>
 		<testResources>
 			<testResource>
 				<directory>src-test</directory>
@@ -37,7 +42,6 @@
 							<sources>
 								<source>src</source>
 								<source>src-gen</source>
-								<source>c_bin</source>
 							</sources>
 						</configuration>
 					</execution>
@@ -64,7 +68,7 @@
 				<version>2.3.2</version>
 				<configuration>
 					<source>1.6</source>
-					<target>1.6</target>					
+					<target>1.6</target>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -78,8 +82,8 @@
 				</configuration>
 				<executions>
 					<execution>
-						<id>make-assembly</id> <!-- this is used for inheritance merges -->
-						<phase>package</phase> <!-- bind to the packaging phase -->
+						<id>make-assembly</id>
+						<phase>package</phase>
 						<goals>
 							<goal>single</goal>
 						</goals>

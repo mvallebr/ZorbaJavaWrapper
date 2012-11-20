@@ -16,9 +16,13 @@ public class JsonTransformation {
 	private int instance;
 	private static boolean librariesLoaded = false;
 
-	private List<String> loadLibList() throws IOException {
-		BufferedReader br = new BufferedReader(new InputStreamReader(getClass()
-				.getResourceAsStream("/dll_deps")));
+	private List<String> loadLibList() throws IOException,
+			JsonTransformationException {
+		InputStream is = getClass().getResourceAsStream("/dll_deps");
+		if (is == null)
+			throw new JsonTransformationException(
+					"Could not load dll_deps file from jar");
+		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		String strLine;
 		List<String> result = new ArrayList<String>();
 		// Read File Line By Line
@@ -64,7 +68,6 @@ public class JsonTransformation {
 			loadLib(lib);
 		}
 		// System.loadLibrary("zorbawrapper");
-		// loadLib("libc.so.6");
 		// loadLib("libzorba_simplestore.so.2.7.0");
 		loadLib("libzorbawrapper.so");
 		librariesLoaded = true;
