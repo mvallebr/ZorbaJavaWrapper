@@ -43,11 +43,11 @@ public class JsonTransformation {
 	private String extractFile(String name) throws JsonTransformationException {
 		try {
 			System.out.println(" ==> Will extract file " + name);
-			InputStream in = getClass().getResourceAsStream("/" + name);
+			InputStream in = getClass().getResourceAsStream(name);
 			if (in == null)
 				throw new JsonTransformationException(
 						"Could not load resource '" + name + "'");
-			File fileOut = new File(System.getProperty("java.io.tmpdir") + "/"
+			File fileOut = new File(System.getProperty("java.io.tmpdir") 
 					+ name);
 			OutputStream out = FileUtils.openOutputStream(fileOut);
 			IOUtils.copy(in, out);
@@ -70,22 +70,23 @@ public class JsonTransformation {
 			return;
 		List<String> files = loadFileList("/filelist", true);
 		for (String file : files) {
+			file = file.substring(1);
 			extractFile(file);
 		}
-		ZorbaJavaWrapperSWIG
-				.setLibPaths(new File(System.getProperty("java.io.tmpdir")
-						+ "/LIB_PATH/").getAbsolutePath());
-		ZorbaJavaWrapperSWIG
-				.setUriPaths(new File(System.getProperty("java.io.tmpdir")
-						+ "/URI_PATH/").getAbsolutePath());
+		ZorbaJavaWrapperSWIG.setLibPaths(new File(System
+				.getProperty("java.io.tmpdir") + "/LIB_PATH/")
+				.getAbsolutePath());
+		ZorbaJavaWrapperSWIG.setUriPaths(new File(System
+				.getProperty("java.io.tmpdir") + "/URI_PATH/")
+				.getAbsolutePath());
 		ZorbaJavaWrapperSWIG.setModulePaths(new File(System
-				.getProperty("java.io.tmpdir") + "/URI_PATH/").getAbsolutePath());
-		
-		//ZorbaJavaWrapperSWIG.setUriPaths("/usr/share/zorba/uris/core/2.7.0");
-		//ZorbaJavaWrapperSWIG.setModulePaths("/usr/share/zorba/uris/core/2.7.0");
-		//ZorbaJavaWrapperSWIG.setLibPaths("/usr/lib/zorba/core/2.7.0");
-		
-		
+				.getProperty("java.io.tmpdir") + "/URI_PATH/")
+				.getAbsolutePath());
+
+		// ZorbaJavaWrapperSWIG.setUriPaths("/usr/share/zorba/uris/core/2.7.0");
+		// ZorbaJavaWrapperSWIG.setModulePaths("/usr/share/zorba/uris/core/2.7.0");
+		// ZorbaJavaWrapperSWIG.setLibPaths("/usr/lib/zorba/core/2.7.0");
+
 		filesExtracted = true;
 	}
 
@@ -96,7 +97,7 @@ public class JsonTransformation {
 		List<String> libs = loadFileList("/dll_deps", false);
 		String fullPath;
 		for (String lib : libs) {
-			fullPath = extractFile(lib);
+			fullPath = extractFile("/" + lib);
 			System.load(fullPath);// loading goes here
 			System.out.println(" ----> DLL " + fullPath
 					+ " loaded successfully");
@@ -105,7 +106,7 @@ public class JsonTransformation {
 		}
 		// System.loadLibrary("zorbawrapper");
 		// loadLib("libzorba_simplestore.so.2.7.0");
-		fullPath = extractFile("libzorbawrapper.so");
+		fullPath = extractFile("/libzorbawrapper.so");
 		System.load(fullPath);// loading goes here
 		System.out.println(" ----> DLL " + fullPath + " loaded successfully");
 		System.out.println("===============================================");
