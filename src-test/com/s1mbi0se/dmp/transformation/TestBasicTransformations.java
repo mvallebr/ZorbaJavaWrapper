@@ -25,6 +25,7 @@ public class TestBasicTransformations {
 		System.out.println("Transformation result 2 = "
 				+ jsonTransformation.transform(originData2));
 
-		jsonTransformation.destroy();
+		jsonTransformation.destroy();	
+		System.exit(0);
 	}
 }

@@ -61,12 +61,15 @@ void disconnect(int instance) {
 	XQuery_t lQuery = queries[instance];
 	lQuery->close();
 	num_instances--;
+	std::cout << "ZorbaJavaWrapper successfully disconnected\n";
 	if (num_instances<=0){
 		lZorba->shutdown();
 		StoreManager::shutdownStore(lStore);	
 		lZorba=NULL;
 		lStore=NULL;
+		std::cout << "Zorba shutdown completed successfully \n";
 	}
+	std::cout.flush();
 }
 
 
@@ -95,6 +98,7 @@ int create_transformation(char *transformationQuery) {
 		std::cout << "Setting module path to '" << modulePaths << "'\n";
 		sc->setModulePaths(modulePathsV);
 	}
+	std::cout.flush();
 	/* Create query using the static context */
 	XQuery_t lQuery = lZorba->compileQuery(transformationQuery, sc);
 	queries[instance] = lQuery;
