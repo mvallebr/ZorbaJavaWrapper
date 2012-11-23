@@ -1,3 +1,5 @@
+import module namespace string = "http://www.zorba-xquery.com/modules/string";
+
 declare variable $inputdoc external;
 
 let $sats := jn:parse-json($inputdoc)("satellites")

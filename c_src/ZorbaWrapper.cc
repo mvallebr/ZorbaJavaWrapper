@@ -24,6 +24,7 @@
 #include <zorba/serializer.h>
 #include <zorba/singleton_item_sequence.h>
 #include <zorba/zorba_exception.h>
+#include <zorba/zorba_string.h>
 
 #include <stdio.h> 
 
@@ -33,8 +34,19 @@ Zorba *lZorba=NULL;
 void* lStore=NULL;
 std::string transformationResult;
 std::map<int,XQuery_t> queries;
+zorba::String uriPaths, libPaths, modulePaths;
 
+void setUriPaths(char *prop) {
+	uriPaths = prop;
+}
 
+void setLibPaths(char *prop) {
+	libPaths = prop;
+}
+
+void setModulePaths(char *prop) {
+	modulePaths = prop;
+}
 
 int connect() {
 	if (num_instances<=0) {
@@ -61,7 +73,30 @@ void disconnect(int instance) {
 
 int create_transformation(char *transformationQuery) {
 	int instance = connect();
-	XQuery_t lQuery = lZorba->compileQuery(transformationQuery);
+	StaticContext_t sc = lZorba->createStaticContext();
+	/* Create lib vector */
+	std::vector<zorba::String> libPathsV;
+	libPathsV.push_back(libPaths);
+	if (libPaths.size()>0){
+		std::cout << "Setting lib path to '" << libPaths << "'\n";
+		sc->setLibPath(libPathsV);
+	}
+	/* Create uri vector */
+	std::vector<zorba::String> uriPathsV;
+	uriPathsV.push_back(uriPaths);
+	if (uriPaths.size()>0) {
+		std::cout << "Setting uri path to '" << uriPaths << "'\n";
+		sc->setURIPath(uriPathsV);
+	}
+	/* Create module vector */
+	std::vector<zorba::String> modulePathsV;
+	modulePathsV.push_back(modulePaths);
+	if (modulePaths.size()>0) {
+		std::cout << "Setting module path to '" << modulePaths << "'\n";
+		sc->setModulePaths(modulePathsV);
+	}
+	/* Create query using the static context */
+	XQuery_t lQuery = lZorba->compileQuery(transformationQuery, sc);
 	queries[instance] = lQuery;
 	return instance;
 }
@@ -86,6 +121,21 @@ char *transform_data(int instance, char *data) {
 	
 	return (char *)transformationResult.c_str();
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

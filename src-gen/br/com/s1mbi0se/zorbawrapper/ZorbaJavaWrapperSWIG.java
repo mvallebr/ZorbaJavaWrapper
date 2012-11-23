@@ -21,4 +21,16 @@ public class ZorbaJavaWrapperSWIG {
     ZorbaJavaWrapperSWIGJNI.disconnect(instance);
   }
 
+  public static void setUriPaths(String prop) {
+    ZorbaJavaWrapperSWIGJNI.setUriPaths(prop);
+  }
+
+  public static void setLibPaths(String prop) {
+    ZorbaJavaWrapperSWIGJNI.setLibPaths(prop);
+  }
+
+  public static void setModulePaths(String prop) {
+    ZorbaJavaWrapperSWIGJNI.setModulePaths(prop);
+  }
+
 }

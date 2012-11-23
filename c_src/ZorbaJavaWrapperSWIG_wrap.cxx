@@ -215,6 +215,9 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
  extern int create_transformation(char *transformationQuery);
  extern char *transform_data(int instance, char *data);
  extern void disconnect(int instance);
+ extern void setUriPaths(char *prop);
+ extern void setLibPaths(char *prop);
+ extern void setModulePaths(char *prop);
  
 
 #ifdef __cplusplus
@@ -268,6 +271,51 @@ SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJN
   (void)jcls;
   arg1 = (int)jarg1; 
   disconnect(arg1);
+}
+
+
+SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_setUriPaths(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  char *arg1 = (char *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = 0;
+  if (jarg1) {
+    arg1 = (char *)jenv->GetStringUTFChars(jarg1, 0);
+    if (!arg1) return ;
+  }
+  setUriPaths(arg1);
+  if (arg1) jenv->ReleaseStringUTFChars(jarg1, (const char *)arg1);
+}
+
+
+SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_setLibPaths(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  char *arg1 = (char *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = 0;
+  if (jarg1) {
+    arg1 = (char *)jenv->GetStringUTFChars(jarg1, 0);
+    if (!arg1) return ;
+  }
+  setLibPaths(arg1);
+  if (arg1) jenv->ReleaseStringUTFChars(jarg1, (const char *)arg1);
+}
+
+
+SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_setModulePaths(JNIEnv *jenv, jclass jcls, jstring jarg1) {
+  char *arg1 = (char *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  arg1 = 0;
+  if (jarg1) {
+    arg1 = (char *)jenv->GetStringUTFChars(jarg1, 0);
+    if (!arg1) return ;
+  }
+  setModulePaths(arg1);
+  if (arg1) jenv->ReleaseStringUTFChars(jarg1, (const char *)arg1);
 }
 
 

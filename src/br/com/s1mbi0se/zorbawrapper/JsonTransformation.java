@@ -15,27 +15,34 @@ import org.apache.commons.io.IOUtils;
 public class JsonTransformation {
 	private int instance;
 	private static boolean librariesLoaded = false;
+	private static boolean filesExtracted = false;
 
-	private List<String> loadLibList() throws IOException,
-			JsonTransformationException {
-		InputStream is = getClass().getResourceAsStream("/dll_deps");
+	private List<String> loadFileList(String filename, boolean useOriginalPath)
+			throws IOException, JsonTransformationException {
+		InputStream is = getClass().getResourceAsStream(filename);
 		if (is == null)
-			throw new JsonTransformationException(
-					"Could not load dll_deps file from jar");
+			throw new JsonTransformationException("Could not load '" + filename
+					+ "' file from jar");
 		BufferedReader br = new BufferedReader(new InputStreamReader(is));
 		String strLine;
 		List<String> result = new ArrayList<String>();
 		// Read File Line By Line
 		while ((strLine = br.readLine()) != null) {
-			if (strLine.trim().length() > 0)
-				result.add(0, strLine.trim());// prepend
+			if (strLine.trim().length() > 0) {
+				if (useOriginalPath)
+					result.add(0, strLine.trim());// prepend
+				else
+					result.add(0,
+							strLine.substring(strLine.lastIndexOf("/") + 1)
+									.trim());// prepend
+			}
 		}
 		return result;
 	}
 
-	private void loadLib(String name) throws JsonTransformationException {
+	private String extractFile(String name) throws JsonTransformationException {
 		try {
-			System.out.println(" ==> Will extract DLL " + name);
+			System.out.println(" ==> Will extract file " + name);
 			InputStream in = getClass().getResourceAsStream("/" + name);
 			if (in == null)
 				throw new JsonTransformationException(
@@ -46,37 +53,69 @@ public class JsonTransformation {
 			IOUtils.copy(in, out);
 			in.close();
 			out.close();
-			System.out.println(" ==> DLL extracted to "
+			System.out.println(" ==> File extracted to "
 					+ fileOut.getAbsolutePath());
-			System.load(fileOut.toString());// loading goes here
-			System.out.println(" ----> DLL " + name + " loaded successfully");
 			System.out.println(" ============================================");
 			System.out.flush();
+			return fileOut.getAbsolutePath();
 		} catch (Exception e) {
 			e.printStackTrace();
-			throw new JsonTransformationException("Could not load library '"
+			throw new JsonTransformationException("Could not extract file '"
 					+ name + "' ", e);
 		}
+	}
+
+	private void extractFiles() throws JsonTransformationException, IOException {
+		if (filesExtracted)
+			return;
+		List<String> files = loadFileList("/filelist", true);
+		for (String file : files) {
+			extractFile(file);
+		}
+		ZorbaJavaWrapperSWIG
+				.setLibPaths(new File(System.getProperty("java.io.tmpdir")
+						+ "/LIB_PATH/").getAbsolutePath());
+		ZorbaJavaWrapperSWIG
+				.setUriPaths(new File(System.getProperty("java.io.tmpdir")
+						+ "/URI_PATH/").getAbsolutePath());
+		ZorbaJavaWrapperSWIG.setModulePaths(new File(System
+				.getProperty("java.io.tmpdir") + "/URI_PATH/").getAbsolutePath());
+		
+		//ZorbaJavaWrapperSWIG.setUriPaths("/usr/share/zorba/uris/core/2.7.0");
+		//ZorbaJavaWrapperSWIG.setModulePaths("/usr/share/zorba/uris/core/2.7.0");
+		//ZorbaJavaWrapperSWIG.setLibPaths("/usr/lib/zorba/core/2.7.0");
+		
+		
+		filesExtracted = true;
 	}
 
 	private void loadLibraries() throws JsonTransformationException,
 			IOException {
 		if (librariesLoaded)
 			return;
-		List<String> libs = loadLibList();
+		List<String> libs = loadFileList("/dll_deps", false);
+		String fullPath;
 		for (String lib : libs) {
-			lib = lib.substring(lib.lastIndexOf("/") + 1).trim();
-			loadLib(lib);
+			fullPath = extractFile(lib);
+			System.load(fullPath);// loading goes here
+			System.out.println(" ----> DLL " + fullPath
+					+ " loaded successfully");
+			System.out
+					.println("===============================================");
 		}
 		// System.loadLibrary("zorbawrapper");
 		// loadLib("libzorba_simplestore.so.2.7.0");
-		loadLib("libzorbawrapper.so");
+		fullPath = extractFile("libzorbawrapper.so");
+		System.load(fullPath);// loading goes here
+		System.out.println(" ----> DLL " + fullPath + " loaded successfully");
+		System.out.println("===============================================");
 		librariesLoaded = true;
 	}
 
 	public JsonTransformation(String transformation)
 			throws JsonTransformationException, IOException {
 		loadLibraries();
+		extractFiles();
 		instance = ZorbaJavaWrapperSWIG.create_transformation(transformation);
 	}
 

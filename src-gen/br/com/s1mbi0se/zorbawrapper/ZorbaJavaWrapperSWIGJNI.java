@@ -12,4 +12,7 @@ public class ZorbaJavaWrapperSWIGJNI {
   public final static native int create_transformation(String jarg1);
   public final static native String transform_data(int jarg1, String jarg2);
   public final static native void disconnect(int jarg1);
+  public final static native void setUriPaths(String jarg1);
+  public final static native void setLibPaths(String jarg1);
+  public final static native void setModulePaths(String jarg1);
 }
