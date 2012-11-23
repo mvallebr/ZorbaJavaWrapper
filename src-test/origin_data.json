@@ -1,17 +1,1 @@
-{
-  "creator" : "Satellites plugin version 0.6.4",
-  "satellites" : {
-    "AAU CUBESAT" : {
-      "tle1" : "1 27846U 03031G 10322.04074654  .00000056  00000-0  45693-4 0  8768",
-      "visible" : false
-    },
-    "AJISAI (EGS)" : {
-      "tle1" : "1 16908U 86061A 10321.84797408 -.00000083  00000-0  10000-3 0  3696",
-      "visible" : true
-    },
-    "AKARI (ASTRO-F)" : {
-      "tle1" : "1 28939U 06005A 10321.96319841  .00000176  00000-0  48808-4 0  4294",
-      "visible" : true
-    }
-  }
-}
+{"id":155,"birthDate":"Apr 23, 1978 12:00:00 AM","createDate":"2010-12-02 16:02:01.316","gender":"F","income":"1000.21997","lastUpdate":"2011-01-10 09:29:43.48782","name":"ALARIE","userMsisdn":[{"countryCode":55,"areaCode":11,"mobileNumber":99872390,"msisdnFullNumber":1199872390,"createDate":"2010-12-02 15:32:58.454"}],"cookies":[{"id":3990,"cookie":"2x2","ip":"186.220.51.166","lastUpdate":"2010-12-02 16:59:05.553","screenColor":"24","screenHeight":"900","screenWidth":"1440","flashVersion":"10,1,82","operationalSystem":"Win32","operationalSystemConsolidate":"windows","javaVersion":"1.6.0_22","javaVersionConsolidate":"1.6.0","browser":"Mozilla/5.0 (Windows; U; Windows NT 6.1; pt-BR; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12","browserConsolidate":"firefox","countryId":"34","countryName":"Brazil","countryIsoCode":"BR","userInfoId":"155","userCpf":"81732623651"},{"id":3994,"cookie":"2x6","ip":"186.220.51.166","lastUpdate":"2010-12-02 16:59:05.82","screenColor":"24","screenHeight":"900","screenWidth":"1440","flashVersion":"10,1,82","operationalSystem":"Win32","operationalSystemConsolidate":"windows","javaVersion":"1.6.0_22","javaVersionConsolidate":"1.6.0","browser":"Mozilla/5.0 (Windows; U; Windows NT 6.1; pt-BR; rv:1.9.2.12) Gecko/20101026 Firefox/3.6.12","browserConsolidate":"firefox","countryId":"34","countryName":"Brazil","countryIsoCode":"BR","userInfoId":"155","userCpf":"81732623651"}],"cpf":"81732623651","cookieIds":["5b9a1112-4f14-4a9e-a4dd-bd05e9548ce4"],"msisdn":[1199872390],"emails":[]}

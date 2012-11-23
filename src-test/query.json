@@ -1,17 +1,25 @@
-import module namespace string = "http://www.zorba-xquery.com/modules/string";
-
 declare variable $inputdoc external;
 
-let $sats := jn:parse-json($inputdoc)("satellites")
+let $pgbean := jn:parse-json($inputdoc)
 return {
-  "visible" : [
-     for $sat in jn:keys($sats)
-     where $sats($sat)("visible")
-     return $sat
-  ],
-  "invisible" : [
-     for $sat in jn:keys($sats)
-     where not($sats($sat)("visible"))
-     return $sat
-  ]
+  "id": $pgbean("uid"),
+  "cpf": $pgbean("cpf"),  
+  "cookieIds": 
+     for $cookie in $pgbean("cookieIds") 
+     return $cookie
+  ,
+  "msisdn": 
+    for $msisdn in $pgbean("msisdn")     
+     return $msisdn
+  ,
+  "emails": 
+    for $email in $pgbean("emails")     
+     return $email
+  ,
+  "name": $pgbean("name"),
+  "lastName": "",
+  "birthDate": $pgbean("birthDate"),
+  "gender": $pgbean("gender"),
+  "maritalStatus": $pgbean("maritalStatus"),
+  "monthlyIncome": $pgbean("monthly")
 }
