@@ -10,20 +10,25 @@ sudo debootstrap --arch i386 squeeze $TEMP_FOLDER http://ftp.uk.debian.org/debia
 
 export CHROOTCMD="sudo chroot $TEMP_FOLDER"
 
+$CHROOTCMD apt-get install -y cmake libxml2-dev uuid-dev gcc make libicu-dev xerces-c3.1 libxerces-c-dev g++ swig colorgcc
+#optional
+$CHROOTCMD apt-get install -y libcurl4-openssl-dev flex bison
+#optional 2
+$CHROOTCMD apt-get install -y libboost-dev libedit-dev
+
 #not needed, as it already comes with wget
 #$CHROOTCMD apt-get install wget
-$CHROOTCMD wget --no-check-certificate https://launchpad.net/zorba/trunk/2.7/+download/zorba-src-2.7.0.tar.gz
-$CHROOTCMD tar -zxvf zorba-src-2.7.0.tar.gz 
-$CHROOTCMD apt-get install -y cmake libxml2-dev uuid-dev gcc make libicu-dev xerces-c3.1 libxerces-c-dev g++ swig colorgcc
+$CHROOTCMD bash -c "cd /tmp/zorbaroot/ && wget --no-check-certificate https://launchpad.net/zorba/trunk/2.7/+download/zorba-src-2.7.0.tar.gz"
+$CHROOTCMD bash -c "cd /tmp/zorbaroot/ && tar -zxvf zorba-src-2.7.0.tar.gz" 
 
-$CHROOTCMD mkdir /zorba-build
-$CHROOTCMD bash -c "cd /zorba-build && cmake  -DCMAKE_BUILD_TYPE=RELEASE -build /zorba-build /zorba-2.7.0/"
-$CHROOTCMD bash -c "cd /zorba-build && make"
+$CHROOTCMD mkdir -p /tmp/zorbaroot/zorba-build
+$CHROOTCMD bash -c "cd /tmp/zorbaroot/zorba-build && cmake  -DCMAKE_BUILD_TYPE=RELEASE -build /zorba-build /zorba-2.7.0/"
+$CHROOTCMD bash -c "cd /tmp/zorbaroot/zorba-build && make"
 
 #copy java
-sudo cp $JAVA_DISTRO_FOLDER/$JAVA_DISTRO_BIN $TEMP_FOLDER
-$CHROOTCMD chmod +x /$JAVA_DISTRO_BIN
-$CHROOTCMD /$JAVA_DISTRO_BIN
+sudo cp $JAVA_DISTRO_FOLDER/$JAVA_DISTRO_BIN $TEMP_FOLDER/tmp/zorbaroot/
+$CHROOTCMD chmod +x /tmp/zorbaroot/$JAVA_DISTRO_BIN
+$CHROOTCMD /tmp/zorbaroot/$JAVA_DISTRO_BIN
 
 
 #compile javawrapper source
@@ -31,5 +36,6 @@ $CHROOTCMD mkdir /javawrapper
 sudo cp -R . $TEMP_FOLDER/javawrapper
 $CHROOTCMD bash -c "cd /javawrapper && make"
 
-sudo cp -R $TEMP_FOLDER/c_bin/ ..
+echo "Execute the following command to copy the c_bin folder"
+echo cp -R $TEMP_FOLDER/c_bin/ ..
 echo "Don't forget to customize ../c_bin/dll_deps file, as it might be needed"

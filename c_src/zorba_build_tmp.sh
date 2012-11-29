@@ -35,5 +35,6 @@ mkdir $TEMP_FOLDER/javawrapper
 cp -R $C_SRC $TEMP_FOLDER/javawrapper
 sh -c "$CHROOTCMD cd ./javawrapper && make"
 
-echo cp -R $TEMP_FOLDER/c_bin/ ..
+echo "Execute the following command to copy the c_bin folder"
+echo sh -c "cd $C_SRC && cp -R $TEMP_FOLDER/c_bin/ .."
 echo "Don't forget to customize ../c_bin/dll_deps file, as it might be needed"

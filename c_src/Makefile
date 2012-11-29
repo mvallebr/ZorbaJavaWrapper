@@ -1,8 +1,8 @@
 CXX=colorgcc
 
-JAVA_HOME=/jdk1.6.0_37/
-ZORBA_BUILD_HOME=/zorba-build
-ZORBA_HOME=/zorba-2.7.0
+JAVA_HOME=/tmp/jdk1.6.0_37/
+ZORBA_BUILD_HOME=/tmp/zorbaroot/zorba-build
+ZORBA_HOME=/tmp/zorbaroot/zorba-2.7.0
 OUTPUT_LIB_DIR=../c_bin
 
 export LD_LIBRARY_PATH=$(ZORBA_BUILD_HOME)/src
