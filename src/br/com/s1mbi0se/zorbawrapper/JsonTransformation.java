@@ -36,7 +36,8 @@ public class JsonTransformation {
 							strLine.substring(strLine.lastIndexOf("/") + 1)
 									.trim());// prepend
 			}
-		}
+		}		
+		
 		return result;
 	}
 
@@ -47,8 +48,7 @@ public class JsonTransformation {
 			if (in == null)
 				throw new JsonTransformationException(
 						"Could not load resource '" + name + "'");
-			File fileOut = new File(System.getProperty("java.io.tmpdir") 
-					+ name);
+			File fileOut = new File(System.getProperty("java.io.tmpdir") + name);
 			OutputStream out = FileUtils.openOutputStream(fileOut);
 			IOUtils.copy(in, out);
 			in.close();
@@ -94,22 +94,41 @@ public class JsonTransformation {
 			IOException {
 		if (librariesLoaded)
 			return;
+
 		List<String> libs = loadFileList("/dll_deps", false);
-		String fullPath;
+		List<String> libsfp = new ArrayList<String>();
+		String fullPath = null;
 		for (String lib : libs) {
 			fullPath = extractFile("/" + lib);
-			System.load(fullPath);// loading goes here
+			libsfp.add(fullPath);
+			
 			System.out.println(" ----> DLL " + fullPath
-					+ " loaded successfully");
+					+ " extracted successfully");
 			System.out
 					.println("===============================================");
 		}
 		// System.loadLibrary("zorbawrapper");
 		// loadLib("libzorba_simplestore.so.2.7.0");
 		fullPath = extractFile("/libzorbawrapper.so");
-		System.load(fullPath);// loading goes here
-		System.out.println(" ----> DLL " + fullPath + " loaded successfully");
+		libsfp.add(fullPath);
+		System.out
+				.println(" ----> DLL " + fullPath + " extracted successfully");
 		System.out.println("===============================================");
+		try {
+
+			for (String lib : libsfp) {
+				fullPath = lib;
+				System.load(fullPath);// loading goes here
+				System.out.println(" ----> DLL " + fullPath
+						+ " loaded successfully");
+				System.out
+						.println("===============================================");
+			}
+		} catch (Throwable e) {
+			e.printStackTrace();
+			throw new JsonTransformationException("Could not load file '"
+					+ fullPath + "' ", e);
+		}
 		librariesLoaded = true;
 	}
 
