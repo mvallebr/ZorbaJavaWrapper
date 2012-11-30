@@ -31,9 +31,9 @@ sh -c "$CHROOTCMD ./$JAVA_DISTRO_BIN"
 
 
 #compile javawrapper source
-mkdir $TEMP_FOLDER/javawrapper
-cp -R $C_SRC $TEMP_FOLDER/javawrapper
-sh -c "$CHROOTCMD cd ./javawrapper && make"
+mkdir -p $TEMP_FOLDER/javawrapper
+cp -R $C_SRC/* $TEMP_FOLDER/javawrapper
+sh -c "cd $TEMP_FOLDER/javawrapper && make"
 
 echo "Execute the following command to copy the c_bin folder"
 echo sh -c "cd $C_SRC && cp -R $TEMP_FOLDER/c_bin/ .."
