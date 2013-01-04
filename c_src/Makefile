@@ -1,6 +1,6 @@
 CXX=colorgcc
 
-JAVA_HOME=/tmp/zorbaroot/jdk1.6.0_37/
+JAVA_HOME=/tmp/zorbaroot/jdk1.6.0_38/
 ZORBA_BUILD_HOME=/tmp/zorbaroot/zorba-build
 ZORBA_HOME=/tmp/zorbaroot/zorba-2.7.0
 OUTPUT_LIB_DIR=../c_bin

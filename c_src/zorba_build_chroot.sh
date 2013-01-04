@@ -1,7 +1,7 @@
 #!/bin/sh
 
 export TEMP_FOLDER="/tmp/squeeze/"
-export JAVA_DISTRO_BIN=jdk-6u37-linux-i586.bin
+export JAVA_DISTRO_BIN=jdk-6u38-linux-i586.bin
 export JAVA_DISTRO_FOLDER=$HOME/Downloads
 
 sudo apt-get install pbuilder debootstrap devscripts

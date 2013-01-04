@@ -1,7 +1,7 @@
 #!/bin/sh
 
 export TEMP_FOLDER="/tmp/zorbaroot/"
-export JAVA_DISTRO_BIN=jdk-6u37-linux-i586.bin
+export JAVA_DISTRO_BIN=jdk-6u38-linux-i586.bin
 export JAVA_DISTRO_FOLDER=$HOME/Downloads
 export C_SRC=$PWD
 
