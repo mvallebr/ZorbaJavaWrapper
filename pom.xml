@@ -3,10 +3,11 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>ZorbaJavaWrapper</groupId>
 	<artifactId>ZorbaJavaWrapper</artifactId>
-	<version>0.1</version>
+	<version>0.1-${lib.version}</version>
+	
 	<profiles>
 		<profile>
-			<id>Ubuntu64</id>
+			<id>ubuntu64</id>
 			<activation>
 				<os>
 					<family>unix</family>
@@ -15,26 +16,30 @@
 				</os>
 			</activation>
 			<properties>
-				<cbin.folder>c_bin_ubuntu64</cbin.folder>
+				<lib.version>ubuntu64</lib.version>
+				<cbin.folder>c_bin_${lib.version}</cbin.folder>
 			</properties>
 		</profile>
 		<profile>
-			<id>Ubuntu32</id>
+			<id>ubuntu32</id>
 			<activation>
 				<os>
 					<name>Linux</name>
 					<family>unix</family>
 					<arch>i386</arch>
 				</os>
+				<activeByDefault>true</activeByDefault>
 			</activation>
 			<properties>
-				<cbin.folder>c_bin_ubuntu32</cbin.folder>
+				<lib.version>ubuntu32</lib.version>
+				<cbin.folder>c_bin_${lib.version}</cbin.folder>
 			</properties>
 		</profile>
 		<profile>
-			<id>Debian32</id>
+			<id>debian32</id>
 			<properties>
-				<cbin.folder>c_bin_debian32</cbin.folder>
+				<lib.version>debian32</lib.version>
+				<cbin.folder>c_bin_${lib.version}</cbin.folder>
 			</properties>
 		</profile>
 	</profiles>
