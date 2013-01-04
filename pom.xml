@@ -7,7 +7,7 @@
 	<build>
 		<resources>
 			<resource>
-				<directory>c_bin</directory>
+				<directory>${cbin.folder}</directory>
 			</resource>
 		</resources>
 		<testResources>
@@ -128,6 +128,50 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<profiles>
+		<profile>
+			<id>Ubuntu64</id>
+			<activation>
+				<os>
+					<name>Linux</name>
+					<family>unix</family>
+					<arch>x86_64</arch>
+					<version>[3.0,3.1,3.2,3.3)</version>
+				</os>
+			</activation>
+			<properties>
+				<cbin.folder>c_bin_ubuntu64</cbin.folder>
+			</properties>
+		</profile>
+		<profile>
+			<id>Ubuntu32</id>
+			<activation>
+				<os>
+					<name>Linux</name>
+					<family>unix</family>
+					<arch>i386</arch>
+					<version>[3,3.3)</version>
+				</os>
+			</activation>
+			<properties>
+				<cbin.folder>c_bin_ubuntu32</cbin.folder>
+			</properties>
+		</profile>
+		<profile>
+			<id>Debian32</id>
+			<activation>
+				<os>
+					<name>Linux</name>
+					<family>unix</family>
+					<arch>i386</arch>
+					<version>[2,3.1)</version>
+				</os>
+			</activation>
+			<properties>
+				<cbin.folder>c_bin_debian32</cbin.folder>
+			</properties>
+		</profile>
+	</profiles>
 	<dependencies>
 		<dependency>
 			<groupId>junit</groupId>
