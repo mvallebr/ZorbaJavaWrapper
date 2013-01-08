@@ -14,6 +14,8 @@
  * limitations under the License.
  */
 
+#include <ZorbaWrapper.h>
+
 #include <iostream>
 #include <sstream>
 #include <string>
@@ -36,15 +38,18 @@ std::string transformationResult;
 std::map<int,XQuery_t> queries;
 zorba::String uriPaths, libPaths, modulePaths;
 
-void setUriPaths(char *prop) {
+void
+ZorbaWrapper::setUriPaths(char *prop) {
 	uriPaths = prop;
 }
 
-void setLibPaths(char *prop) {
+void
+ZorbaWrapper::setLibPaths(char *prop) {
 	libPaths = prop;
 }
 
-void setModulePaths(char *prop) {
+void
+ZorbaWrapper::setModulePaths(char *prop) {
 	modulePaths = prop;
 }
 
@@ -57,7 +62,18 @@ int connect() {
 	return ++instance_count;
 }
 
-void disconnect(int instance) {
+//Constructor
+ZorbaWrapper::ZorbaWrapper() {
+
+}
+
+//Destructor
+ZorbaWrapper::~ZorbaWrapper() {
+
+}
+
+void
+ZorbaWrapper::disconnect(int instance) {
 	XQuery_t lQuery = queries[instance];
 	lQuery->close();
 	num_instances--;
@@ -74,7 +90,8 @@ void disconnect(int instance) {
 
 
 
-int create_transformation(char *transformationQuery) {
+int
+ZorbaWrapper::create_transformation(char *transformationQuery) {
 	int instance = connect();
 	StaticContext_t sc = lZorba->createStaticContext();
 	/* Create lib vector */
@@ -106,7 +123,8 @@ int create_transformation(char *transformationQuery) {
 }
 
 
-char *transform_data(int instance, char *data) {
+char *
+ZorbaWrapper::transform_data(int instance, char *data) {
 	XQuery_t lQuery = queries[instance];
 	ItemFactory* lFactory = lZorba->getItemFactory();
 	/* The item that is to be bound to the external variable */

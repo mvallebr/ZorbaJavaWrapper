@@ -210,112 +210,378 @@ static void SWIGUNUSED SWIG_JavaThrowException(JNIEnv *jenv, SWIG_JavaExceptionC
 
 #define SWIG_contract_assert(nullreturn, expr, msg) if (!(expr)) {SWIG_JavaThrowException(jenv, SWIG_JavaIllegalArgumentException, msg); return nullreturn; } else
 
+/*  Errors in SWIG */
+#define  SWIG_UnknownError    	   -1 
+#define  SWIG_IOError        	   -2 
+#define  SWIG_RuntimeError   	   -3 
+#define  SWIG_IndexError     	   -4 
+#define  SWIG_TypeError      	   -5 
+#define  SWIG_DivisionByZero 	   -6 
+#define  SWIG_OverflowError  	   -7 
+#define  SWIG_SyntaxError    	   -8 
+#define  SWIG_ValueError     	   -9 
+#define  SWIG_SystemError    	   -10
+#define  SWIG_AttributeError 	   -11
+#define  SWIG_MemoryError    	   -12 
+#define  SWIG_NullReferenceError   -13
 
- /* Put header files here or function declarations like below */
- extern int create_transformation(char *transformationQuery);
- extern char *transform_data(int instance, char *data);
- extern void disconnect(int instance);
- extern void setUriPaths(char *prop);
- extern void setLibPaths(char *prop);
- extern void setModulePaths(char *prop);
- 
+
+
+
+SWIGINTERN void SWIG_JavaException(JNIEnv *jenv, int code, const char *msg) {
+  SWIG_JavaExceptionCodes exception_code = SWIG_JavaUnknownError;
+  switch(code) {
+  case SWIG_MemoryError:
+    exception_code = SWIG_JavaOutOfMemoryError;
+    break;
+  case SWIG_IOError:
+    exception_code = SWIG_JavaIOException;
+    break;
+  case SWIG_SystemError:
+  case SWIG_RuntimeError:
+    exception_code = SWIG_JavaRuntimeException;
+    break;
+  case SWIG_OverflowError:
+  case SWIG_IndexError:
+    exception_code = SWIG_JavaIndexOutOfBoundsException;
+    break;
+  case SWIG_DivisionByZero:
+    exception_code = SWIG_JavaArithmeticException;
+    break;
+  case SWIG_SyntaxError:
+  case SWIG_ValueError:
+  case SWIG_TypeError:
+    exception_code = SWIG_JavaIllegalArgumentException;
+    break;
+  case SWIG_UnknownError:
+  default:
+    exception_code = SWIG_JavaUnknownError;
+    break;
+  }
+  SWIG_JavaThrowException(jenv, exception_code, msg);
+}
+
+
+#include <stdexcept>
+
+  // Implementations
+
+#include <string>
+#include <sstream>
+#include <zorba/zorba.h>
+#include <zorba/store_manager.h>
+#include <zorba/zorba_exception.h>
+#include <zorba/diagnostic_handler.h>
+#include <zorba/options.h>
+#include <zorba/singleton_item_sequence.h>
+#include <zorba/serializer.h>
+#include <zorba/static_collection_manager.h>
+
+  class CompilerHints;
+  class DiagnosticHandler;
+  class Store;
+  class Zorba;
+  class Iterator;
+
+  class DynamicException;
+  class DocumentManager;
+  class XQueryException;
+  class SerializationException;
+  class StaticException;
+  class SystemException;
+  class TypeException;
+  class UserException;
+  class ZorbaException;
+  class XmlDataManager;
+  class StaticCollectionManager;
+  class Store;
+  class InMemoryStore;
+  
+
+
+	#include "ZorbaWrapper.h"
+
 
 #ifdef __cplusplus
 extern "C" {
 #endif
 
-SWIGEXPORT jint JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_create_1transformation(JNIEnv *jenv, jclass jcls, jstring jarg1) {
-  jint jresult = 0 ;
-  char *arg1 = (char *) 0 ;
-  int result;
+SWIGEXPORT jlong JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_new_1ZorbaWrapper(JNIEnv *jenv, jclass jcls) {
+  jlong jresult = 0 ;
+  ZorbaWrapper *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = 0;
-  if (jarg1) {
-    arg1 = (char *)jenv->GetStringUTFChars(jarg1, 0);
-    if (!arg1) return 0;
+  {
+    try {
+      result = (ZorbaWrapper *)new ZorbaWrapper();
+    }
+    catch (zorba::XQueryException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return 0; 
+      };
+    }
+    catch (zorba::ZorbaException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return 0; 
+      };
+    }
   }
-  result = (int)create_transformation(arg1);
-  jresult = (jint)result; 
-  if (arg1) jenv->ReleaseStringUTFChars(jarg1, (const char *)arg1);
+  *(ZorbaWrapper **)&jresult = result; 
   return jresult;
 }
 
 
-SWIGEXPORT jstring JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_transform_1data(JNIEnv *jenv, jclass jcls, jint jarg1, jstring jarg2) {
-  jstring jresult = 0 ;
-  int arg1 ;
-  char *arg2 = (char *) 0 ;
-  char *result = 0 ;
+SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_delete_1ZorbaWrapper(JNIEnv *jenv, jclass jcls, jlong jarg1) {
+  ZorbaWrapper *arg1 = (ZorbaWrapper *) 0 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = (int)jarg1; 
+  arg1 = *(ZorbaWrapper **)&jarg1; 
+  {
+    try {
+      delete arg1;
+    }
+    catch (zorba::XQueryException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return ; 
+      };
+    }
+    catch (zorba::ZorbaException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return ; 
+      };
+    }
+  }
+}
+
+
+SWIGEXPORT jint JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_ZorbaWrapper_1create_1transformation(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  jint jresult = 0 ;
+  ZorbaWrapper *arg1 = (ZorbaWrapper *) 0 ;
+  char *arg2 = (char *) 0 ;
+  int result;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ZorbaWrapper **)&jarg1; 
   arg2 = 0;
   if (jarg2) {
     arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
     if (!arg2) return 0;
   }
-  result = (char *)transform_data(arg1,arg2);
-  if (result) jresult = jenv->NewStringUTF((const char *)result);
+  {
+    try {
+      result = (int)(arg1)->create_transformation(arg2);
+    }
+    catch (zorba::XQueryException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return 0; 
+      };
+    }
+    catch (zorba::ZorbaException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return 0; 
+      };
+    }
+  }
+  jresult = (jint)result; 
   if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
   return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_disconnect(JNIEnv *jenv, jclass jcls, jint jarg1) {
-  int arg1 ;
+SWIGEXPORT jstring JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_ZorbaWrapper_1transform_1data(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2, jstring jarg3) {
+  jstring jresult = 0 ;
+  ZorbaWrapper *arg1 = (ZorbaWrapper *) 0 ;
+  int arg2 ;
+  char *arg3 = (char *) 0 ;
+  char *result = 0 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = (int)jarg1; 
-  disconnect(arg1);
+  (void)jarg1_;
+  arg1 = *(ZorbaWrapper **)&jarg1; 
+  arg2 = (int)jarg2; 
+  arg3 = 0;
+  if (jarg3) {
+    arg3 = (char *)jenv->GetStringUTFChars(jarg3, 0);
+    if (!arg3) return 0;
+  }
+  {
+    try {
+      result = (char *)(arg1)->transform_data(arg2,arg3);
+    }
+    catch (zorba::XQueryException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return 0; 
+      };
+    }
+    catch (zorba::ZorbaException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return 0; 
+      };
+    }
+  }
+  if (result) jresult = jenv->NewStringUTF((const char *)result);
+  if (arg3) jenv->ReleaseStringUTFChars(jarg3, (const char *)arg3);
+  return jresult;
 }
 
 
-SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_setUriPaths(JNIEnv *jenv, jclass jcls, jstring jarg1) {
-  char *arg1 = (char *) 0 ;
+SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_ZorbaWrapper_1disconnect(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jint jarg2) {
+  ZorbaWrapper *arg1 = (ZorbaWrapper *) 0 ;
+  int arg2 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = 0;
-  if (jarg1) {
-    arg1 = (char *)jenv->GetStringUTFChars(jarg1, 0);
-    if (!arg1) return ;
+  (void)jarg1_;
+  arg1 = *(ZorbaWrapper **)&jarg1; 
+  arg2 = (int)jarg2; 
+  {
+    try {
+      (arg1)->disconnect(arg2);
+    }
+    catch (zorba::XQueryException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return ; 
+      };
+    }
+    catch (zorba::ZorbaException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return ; 
+      };
+    }
   }
-  setUriPaths(arg1);
-  if (arg1) jenv->ReleaseStringUTFChars(jarg1, (const char *)arg1);
 }
 
 
-SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_setLibPaths(JNIEnv *jenv, jclass jcls, jstring jarg1) {
-  char *arg1 = (char *) 0 ;
+SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_ZorbaWrapper_1setUriPaths(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  ZorbaWrapper *arg1 = (ZorbaWrapper *) 0 ;
+  char *arg2 = (char *) 0 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = 0;
-  if (jarg1) {
-    arg1 = (char *)jenv->GetStringUTFChars(jarg1, 0);
-    if (!arg1) return ;
+  (void)jarg1_;
+  arg1 = *(ZorbaWrapper **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
+    if (!arg2) return ;
   }
-  setLibPaths(arg1);
-  if (arg1) jenv->ReleaseStringUTFChars(jarg1, (const char *)arg1);
+  {
+    try {
+      (arg1)->setUriPaths(arg2);
+    }
+    catch (zorba::XQueryException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return ; 
+      };
+    }
+    catch (zorba::ZorbaException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return ; 
+      };
+    }
+  }
+  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
 }
 
 
-SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_setModulePaths(JNIEnv *jenv, jclass jcls, jstring jarg1) {
-  char *arg1 = (char *) 0 ;
+SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_ZorbaWrapper_1setLibPaths(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  ZorbaWrapper *arg1 = (ZorbaWrapper *) 0 ;
+  char *arg2 = (char *) 0 ;
   
   (void)jenv;
   (void)jcls;
-  arg1 = 0;
-  if (jarg1) {
-    arg1 = (char *)jenv->GetStringUTFChars(jarg1, 0);
-    if (!arg1) return ;
+  (void)jarg1_;
+  arg1 = *(ZorbaWrapper **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
+    if (!arg2) return ;
   }
-  setModulePaths(arg1);
-  if (arg1) jenv->ReleaseStringUTFChars(jarg1, (const char *)arg1);
+  {
+    try {
+      (arg1)->setLibPaths(arg2);
+    }
+    catch (zorba::XQueryException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return ; 
+      };
+    }
+    catch (zorba::ZorbaException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return ; 
+      };
+    }
+  }
+  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
+}
+
+
+SWIGEXPORT void JNICALL Java_br_com_s1mbi0se_zorbawrapper_ZorbaJavaWrapperSWIGJNI_ZorbaWrapper_1setModulePaths(JNIEnv *jenv, jclass jcls, jlong jarg1, jobject jarg1_, jstring jarg2) {
+  ZorbaWrapper *arg1 = (ZorbaWrapper *) 0 ;
+  char *arg2 = (char *) 0 ;
+  
+  (void)jenv;
+  (void)jcls;
+  (void)jarg1_;
+  arg1 = *(ZorbaWrapper **)&jarg1; 
+  arg2 = 0;
+  if (jarg2) {
+    arg2 = (char *)jenv->GetStringUTFChars(jarg2, 0);
+    if (!arg2) return ;
+  }
+  {
+    try {
+      (arg1)->setModulePaths(arg2);
+    }
+    catch (zorba::XQueryException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return ; 
+      };
+    }
+    catch (zorba::ZorbaException& e) {
+      std::stringstream lStream;
+      lStream << e;
+      {
+        SWIG_JavaException(jenv, SWIG_RuntimeError, lStream.str().c_str()); return ; 
+      };
+    }
+  }
+  if (arg2) jenv->ReleaseStringUTFChars(jarg2, (const char *)arg2);
 }
 
 

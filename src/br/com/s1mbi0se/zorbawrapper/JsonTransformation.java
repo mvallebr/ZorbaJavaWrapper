@@ -16,6 +16,7 @@ public class JsonTransformation {
 	private int instance;
 	private static boolean librariesLoaded = false;
 	private static boolean filesExtracted = false;
+	private static ZorbaWrapper zorbaWrapper;
 
 	private List<String> loadFileList(String filename, boolean useOriginalPath)
 			throws IOException, JsonTransformationException {
@@ -36,8 +37,8 @@ public class JsonTransformation {
 							strLine.substring(strLine.lastIndexOf("/") + 1)
 									.trim());// prepend
 			}
-		}		
-		
+		}
+
 		return result;
 	}
 
@@ -73,13 +74,12 @@ public class JsonTransformation {
 			file = file.substring(1);
 			extractFile(file);
 		}
-		ZorbaJavaWrapperSWIG.setLibPaths(new File(System
-				.getProperty("java.io.tmpdir") + "/LIB_PATH/")
-				.getAbsolutePath());
-		ZorbaJavaWrapperSWIG.setUriPaths(new File(System
-				.getProperty("java.io.tmpdir") + "/URI_PATH/")
-				.getAbsolutePath());
-		ZorbaJavaWrapperSWIG.setModulePaths(new File(System
+		zorbaWrapper = new ZorbaWrapper();
+		zorbaWrapper.setLibPaths(new File(System.getProperty("java.io.tmpdir")
+				+ "/LIB_PATH/").getAbsolutePath());
+		zorbaWrapper.setUriPaths(new File(System.getProperty("java.io.tmpdir")
+				+ "/URI_PATH/").getAbsolutePath());
+		zorbaWrapper.setModulePaths(new File(System
 				.getProperty("java.io.tmpdir") + "/URI_PATH/")
 				.getAbsolutePath());
 
@@ -101,7 +101,7 @@ public class JsonTransformation {
 		for (String lib : libs) {
 			fullPath = extractFile("/" + lib);
 			libsfp.add(fullPath);
-			
+
 			System.out.println(" ----> DLL " + fullPath
 					+ " extracted successfully");
 			System.out
@@ -135,8 +135,9 @@ public class JsonTransformation {
 	public JsonTransformation(String transformation)
 			throws JsonTransformationException, IOException {
 		loadLibraries();
+		
 		extractFiles();
-		instance = ZorbaJavaWrapperSWIG.create_transformation(transformation);
+		instance = zorbaWrapper.create_transformation(transformation);
 	}
 
 	public JsonTransformation(InputStream Transformation) throws IOException,
@@ -145,14 +146,14 @@ public class JsonTransformation {
 	}
 
 	public void destroy() {
-		ZorbaJavaWrapperSWIG.disconnect(instance);
+		zorbaWrapper.disconnect(instance);
 	}
 
 	public String transform(String origin) throws JsonTransformationException {
 		if (instance < 0)
 			throw new JsonTransformationException(
 					"Instance not created, please connect first");
-		return ZorbaJavaWrapperSWIG.transform_data(instance, origin);
+		return zorbaWrapper.transform_data(instance, origin);
 	}
 
 	public String transform(InputStream origin) throws IOException,

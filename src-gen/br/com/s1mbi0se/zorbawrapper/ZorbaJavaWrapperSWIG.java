@@ -9,28 +9,4 @@
 package br.com.s1mbi0se.zorbawrapper;
 
 public class ZorbaJavaWrapperSWIG {
-  public static int create_transformation(String transformationQuery) {
-    return ZorbaJavaWrapperSWIGJNI.create_transformation(transformationQuery);
-  }
-
-  public static String transform_data(int instance, String data) {
-    return ZorbaJavaWrapperSWIGJNI.transform_data(instance, data);
-  }
-
-  public static void disconnect(int instance) {
-    ZorbaJavaWrapperSWIGJNI.disconnect(instance);
-  }
-
-  public static void setUriPaths(String prop) {
-    ZorbaJavaWrapperSWIGJNI.setUriPaths(prop);
-  }
-
-  public static void setLibPaths(String prop) {
-    ZorbaJavaWrapperSWIGJNI.setLibPaths(prop);
-  }
-
-  public static void setModulePaths(String prop) {
-    ZorbaJavaWrapperSWIGJNI.setModulePaths(prop);
-  }
-
 }

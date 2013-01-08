@@ -18,14 +18,18 @@ public class TestBasicTransformations {
 
 		InputStream originData1 = TestBasicTransformations.class
 				.getResourceAsStream("/origin_data.json");
-		System.out.println("Transformation result 1 = "
-				+ jsonTransformation.transform(originData1));
 		InputStream originData2 = TestBasicTransformations.class
 				.getResourceAsStream("/origin_data2.json");
-		System.out.println("Transformation result 2 = "
-				+ jsonTransformation.transform(originData2));
+		String o1 = JsonTransformation.readFile(originData1);
+		String o2 = JsonTransformation.readFile(originData2);
+		for (int i = 0; i < 100; i++) {
+			System.out.println("Transformation result 1 = "
+					+ jsonTransformation.transform(o1));
+			System.out.println("Transformation result 2 = "
+					+ jsonTransformation.transform(o2));
+		}
 
-		jsonTransformation.destroy();	
+		jsonTransformation.destroy();
 		System.exit(0);
 	}
 }

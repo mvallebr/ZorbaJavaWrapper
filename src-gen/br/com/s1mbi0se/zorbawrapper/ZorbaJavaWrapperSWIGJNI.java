@@ -9,10 +9,12 @@
 package br.com.s1mbi0se.zorbawrapper;
 
 public class ZorbaJavaWrapperSWIGJNI {
-  public final static native int create_transformation(String jarg1);
-  public final static native String transform_data(int jarg1, String jarg2);
-  public final static native void disconnect(int jarg1);
-  public final static native void setUriPaths(String jarg1);
-  public final static native void setLibPaths(String jarg1);
-  public final static native void setModulePaths(String jarg1);
+  public final static native long new_ZorbaWrapper();
+  public final static native void delete_ZorbaWrapper(long jarg1);
+  public final static native int ZorbaWrapper_create_transformation(long jarg1, ZorbaWrapper jarg1_, String jarg2);
+  public final static native String ZorbaWrapper_transform_data(long jarg1, ZorbaWrapper jarg1_, int jarg2, String jarg3);
+  public final static native void ZorbaWrapper_disconnect(long jarg1, ZorbaWrapper jarg1_, int jarg2);
+  public final static native void ZorbaWrapper_setUriPaths(long jarg1, ZorbaWrapper jarg1_, String jarg2);
+  public final static native void ZorbaWrapper_setLibPaths(long jarg1, ZorbaWrapper jarg1_, String jarg2);
+  public final static native void ZorbaWrapper_setModulePaths(long jarg1, ZorbaWrapper jarg1_, String jarg2);
 }

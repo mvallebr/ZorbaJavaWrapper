@@ -30,7 +30,7 @@ copy-modules:
 
 swig:	
 	mkdir -p ../src-gen/br/com/s1mbi0se/zorbawrapper
-	swig -c++ -java -package br.com.s1mbi0se.zorbawrapper -outdir ../src-gen/br/com/s1mbi0se/zorbawrapper ZorbaJavaWrapperSWIG.i	
+	swig -Wall -c++ -java -package br.com.s1mbi0se.zorbawrapper -outdir ../src-gen/br/com/s1mbi0se/zorbawrapper ZorbaJavaWrapperSWIG.i	
 	$(CXX) $(CXXFLAGS) -c -o ZorbaJavaWrapperSWIG_wrap.o ZorbaJavaWrapperSWIG_wrap.cxx
 
 all: swig copy-modules $(LIBOBJS) $(OBJS) 	

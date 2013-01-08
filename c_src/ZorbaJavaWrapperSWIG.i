@@ -1,17 +1,76 @@
 %module ZorbaJavaWrapperSWIG
- %{
- /* Put header files here or function declarations like below */
- extern int create_transformation(char *transformationQuery);
- extern char *transform_data(int instance, char *data);
- extern void disconnect(int instance);
- extern void setUriPaths(char *prop);
- extern void setLibPaths(char *prop);
- extern void setModulePaths(char *prop);
- %}
+
+ // Language independent exception handler
+%include exception.i
+%allowexception; 
+%exception {
+  try {
+    $action
+  }
+  catch (zorba::XQueryException& e) {
+    std::stringstream lStream;
+    lStream << e;
+    SWIG_exception(SWIG_RuntimeError, lStream.str().c_str());
+  }
+  catch (zorba::ZorbaException& e) {
+    std::stringstream lStream;
+    lStream << e;
+    SWIG_exception(SWIG_RuntimeError, lStream.str().c_str());
+  }
+}
  
- extern int create_transformation(char *transformationQuery);
- extern char *transform_data(int instance, char *data);
- extern void disconnect(int instance);
- extern void setUriPaths(char *prop);
- extern void setLibPaths(char *prop);
- extern void setModulePaths(char *prop);
+ 
+%{  // Implementations
+
+#include <string>
+#include <sstream>
+#include <zorba/zorba.h>
+#include <zorba/store_manager.h>
+#include <zorba/zorba_exception.h>
+#include <zorba/diagnostic_handler.h>
+#include <zorba/options.h>
+#include <zorba/singleton_item_sequence.h>
+#include <zorba/serializer.h>
+#include <zorba/static_collection_manager.h>
+
+  class CompilerHints;
+  class DiagnosticHandler;
+  class Store;
+  class Zorba;
+  class Iterator;
+
+  class DynamicException;
+  class DocumentManager;
+  class XQueryException;
+  class SerializationException;
+  class StaticException;
+  class SystemException;
+  class TypeException;
+  class UserException;
+  class ZorbaException;
+  class XmlDataManager;
+  class StaticCollectionManager;
+  class Store;
+  class InMemoryStore;
+  
+%}
+ 
+ 
+ 
+
+%{
+	#include "ZorbaWrapper.h"
+%}
+ 
+class ZorbaWrapper {
+public:
+	ZorbaWrapper();
+	~ZorbaWrapper();
+
+	int create_transformation(char *transformationQuery);
+	char *transform_data(int instance, char *data);
+	void disconnect(int instance);
+	void setUriPaths(char *prop);
+	void setLibPaths(char *prop);
+	void setModulePaths(char *prop);
+};
