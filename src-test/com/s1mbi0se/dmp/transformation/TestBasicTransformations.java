@@ -21,7 +21,7 @@ public class TestBasicTransformations {
 		InputStream originData2 = TestBasicTransformations.class
 				.getResourceAsStream("/origin_data2.json");
 		String o1 = JsonTransformation.readFile(originData1);
-		String o2 = JsonTransformation.readFile(originData2);
+		String o2 = JsonTransformation.readFile(originData2)+"}";
 		for (int i = 0; i < 100; i++) {
 			System.out.println("Transformation result 1 = "
 					+ jsonTransformation.transform(o1));

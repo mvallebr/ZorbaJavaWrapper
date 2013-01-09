@@ -133,13 +133,13 @@ ZorbaWrapper::transform_data(int instance, char *data) {
 	/* Actually perform the binding. */
 	lCtx->setVariable("inputdoc", lItem);
 	std::ostringstream oss (std::ostringstream::out);		
-	try {
+//	try {
 		oss << lQuery;
 		transformationResult = oss.str();
-	} catch (ZorbaException &e) {
-	    std::cerr << e << std::endl;
-	    return false;
-	}
+//	} catch (ZorbaException &e) {
+//	    std::cerr << e << std::endl;
+//	    return false;
+//	}
 	
 	return (char *)transformationResult.c_str();
 }
