@@ -39,28 +39,28 @@ public class ZorbaWrapper {
     this(ZorbaJavaWrapperSWIGJNI.new_ZorbaWrapper(), true);
   }
 
-  public int create_transformation(String transformationQuery) {
-    return ZorbaJavaWrapperSWIGJNI.ZorbaWrapper_create_transformation(swigCPtr, this, transformationQuery);
+  public static void disconnectAll() {
+    ZorbaJavaWrapperSWIGJNI.ZorbaWrapper_disconnectAll();
   }
 
-  public String transform_data(int instance, String data) {
-    return ZorbaJavaWrapperSWIGJNI.ZorbaWrapper_transform_data(swigCPtr, this, instance, data);
+  public void create_transformation(String transformationQuery) {
+    ZorbaJavaWrapperSWIGJNI.ZorbaWrapper_create_transformation(swigCPtr, this, transformationQuery);
   }
 
-  public void disconnect(int instance) {
-    ZorbaJavaWrapperSWIGJNI.ZorbaWrapper_disconnect(swigCPtr, this, instance);
+  public String transform_data(String data) {
+    return ZorbaJavaWrapperSWIGJNI.ZorbaWrapper_transform_data(swigCPtr, this, data);
   }
 
-  public void setUriPaths(String prop) {
-    ZorbaJavaWrapperSWIGJNI.ZorbaWrapper_setUriPaths(swigCPtr, this, prop);
+  public static void setUriPaths(String prop) {
+    ZorbaJavaWrapperSWIGJNI.ZorbaWrapper_setUriPaths(prop);
   }
 
-  public void setLibPaths(String prop) {
-    ZorbaJavaWrapperSWIGJNI.ZorbaWrapper_setLibPaths(swigCPtr, this, prop);
+  public static void setLibPaths(String prop) {
+    ZorbaJavaWrapperSWIGJNI.ZorbaWrapper_setLibPaths(prop);
   }
 
-  public void setModulePaths(String prop) {
-    ZorbaJavaWrapperSWIGJNI.ZorbaWrapper_setModulePaths(swigCPtr, this, prop);
+  public static void setModulePaths(String prop) {
+    ZorbaJavaWrapperSWIGJNI.ZorbaWrapper_setModulePaths(prop);
   }
 
 }

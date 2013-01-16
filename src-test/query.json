@@ -1,25 +1,38 @@
 declare variable $inputdoc external;
 
-let $pgbean := jn:parse-json($inputdoc)
+let $fbbean := jn:parse-json($inputdoc)
+
+let $fbinterest_in1 := if(empty($fbbean("interested_in"))) then null else jn:members($fbbean("interested_in"))[1]
+let $fbinterest_in2 := if(empty($fbbean("interested_in"))) then null else jn:members($fbbean("interested_in"))[2] 
+let $fbinterest_woman := if($fbinterest_in1 = "female" or $fbinterest_in2 = "female") then "1" else "0"
+let $fbinterest_man := if($fbinterest_in1 = "male" or $fbinterest_in2 = "male") then "1" else "0"
+
+let $fbgender :=
+	if(empty($fbbean("gender")))
+		then null
+	else (
+		if($fbbean("gender") = "male")
+			then "M"
+		else (
+			if($fbbean("gender") = "female") then "F" else null
+		)
+	)
+
 return {
-  "id": $pgbean("uid"),
-  "cpf": $pgbean("cpf"),  
-  "cookieIds": 
-     for $cookie in $pgbean("cookieIds") 
-     return $cookie
-  ,
-  "msisdn": 
-    for $msisdn in $pgbean("msisdn")     
-     return $msisdn
-  ,
-  "emails": 
-    for $email in $pgbean("emails")     
-     return $email
-  ,
-  "name": $pgbean("name"),
-  "lastName": "",
-  "birthDate": $pgbean("birthDate"),
-  "gender": $pgbean("gender"),
-  "maritalStatus": $pgbean("maritalStatus"),
-  "monthlyIncome": $pgbean("monthly")
-}
+    "facebookId" : $fbbean("id")
+    ,"name" : $fbbean("name")
+    ,"gender" : $fbgender
+    ,"birthDate" : $fbbean("birthday")
+	,"interestsInWoman" : $fbinterest_woman
+	,"interestsInMan" : $fbinterest_man
+	,"emails" : [$fbbean("email")]
+	,"languages" : [
+		for $fblanguages in jn:members($fbbean("languages"))
+		return $fblanguages("name")
+	]
+	,"maritalStatus" : $fbbean("relationship_status")
+	,"significantOther" : $fbbean("significant_other")("name")
+	,"significantOtherFid" : $fbbean("significant_other")("id")
+	,"political" : $fbbean("political")
+	,"religion" : $fbbean("religion")
+ }

@@ -13,10 +13,13 @@ import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
 
 public class JsonTransformation {
-	private int instance;
 	private static boolean librariesLoaded = false;
 	private static boolean filesExtracted = false;
 	private static ZorbaWrapper zorbaWrapper;
+
+	public static void finishAll() {
+		ZorbaWrapper.disconnectAll();
+	}
 
 	private List<String> loadFileList(String filename, boolean useOriginalPath)
 			throws IOException, JsonTransformationException {
@@ -135,9 +138,9 @@ public class JsonTransformation {
 	public JsonTransformation(String transformation)
 			throws JsonTransformationException, IOException {
 		loadLibraries();
-		
+
 		extractFiles();
-		instance = zorbaWrapper.create_transformation(transformation);
+		zorbaWrapper.create_transformation(transformation);
 	}
 
 	public JsonTransformation(InputStream Transformation) throws IOException,
@@ -145,15 +148,11 @@ public class JsonTransformation {
 		this(readFile(Transformation));
 	}
 
-	public void destroy() {
-		zorbaWrapper.disconnect(instance);
-	}
-
 	public String transform(String origin) throws JsonTransformationException {
-		if (instance < 0)
+		if (zorbaWrapper == null)
 			throw new JsonTransformationException(
 					"Instance not created, please connect first");
-		return zorbaWrapper.transform_data(instance, origin);
+		return zorbaWrapper.transform_data(origin);
 	}
 
 	public String transform(InputStream origin) throws IOException,

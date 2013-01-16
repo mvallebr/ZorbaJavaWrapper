@@ -7,7 +7,7 @@ OUTPUT_LIB_DIR=../c_bin
 
 export LD_LIBRARY_PATH=$(ZORBA_BUILD_HOME)/src
 ZORBA_CFLAGS=-I$(ZORBA_HOME)/include/ -I$(ZORBA_BUILD_HOME)/include
-CXXFLAGS=-Wall -O2 -I/usr/include/ -fPIC -I. -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux $(ZORBA_CFLAGS)
+CXXFLAGS=-Wall -O2 -g -I/usr/include/ -fPIC -I. -I$(JAVA_HOME)/include -I$(JAVA_HOME)/include/linux $(ZORBA_CFLAGS)
 OBJS=ZorbaWrapperTest.o
 LIBOBJS=ZorbaWrapper.o
 SWIG_OBJS=ZorbaJavaWrapperSWIG_wrap.o

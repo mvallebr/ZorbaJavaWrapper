@@ -10,11 +10,11 @@ sudo debootstrap --arch i386 squeeze $TEMP_FOLDER http://ftp.uk.debian.org/debia
 
 export CHROOTCMD="sudo chroot $TEMP_FOLDER"
 
-$CHROOTCMD apt-get install -y cmake libxml2-dev uuid-dev gcc make libicu-dev xerces-c3.1 libxerces-c-dev g++ swig colorgcc
+$CHROOTCMD apt-get install -y --force-yes cmake libxml2-dev uuid-dev gcc make libicu-dev xerces-c3.1 libxerces-c-dev g++ swig colorgcc
 #optional
-$CHROOTCMD apt-get install -y libcurl4-openssl-dev flex bison
+$CHROOTCMD apt-get install -y --force-yes libcurl4-openssl-dev flex bison
 #optional 2
-$CHROOTCMD apt-get install -y libboost-dev libedit-dev
+$CHROOTCMD apt-get install -y --force-yes libboost-dev libedit-dev
 
 #not needed, as it already comes with wget
 #$CHROOTCMD apt-get install wget

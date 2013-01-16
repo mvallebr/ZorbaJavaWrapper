@@ -1,0 +1,25 @@
+declare variable $inputdoc external;
+
+let $pgbean := jn:parse-json($inputdoc)
+return {
+  "id": $pgbean("uid"),
+  "cpf": $pgbean("cpf"),  
+  "cookieIds": 
+     for $cookie in $pgbean("cookieIds") 
+     return $cookie
+  ,
+  "msisdn": 
+    for $msisdn in $pgbean("msisdn")     
+     return $msisdn
+  ,
+  "emails": 
+    for $email in $pgbean("emails")     
+     return $email
+  ,
+  "name": $pgbean("name"),
+  "lastName": "",
+  "birthDate": $pgbean("birthDate"),
+  "gender": $pgbean("gender"),
+  "maritalStatus": $pgbean("maritalStatus"),
+  "monthlyIncome": $pgbean("monthly")
+}

@@ -63,14 +63,15 @@
 %}
  
 class ZorbaWrapper {
+
 public:
 	ZorbaWrapper();
 	~ZorbaWrapper();
 
-	int create_transformation(char *transformationQuery);
-	char *transform_data(int instance, char *data);
-	void disconnect(int instance);
-	void setUriPaths(char *prop);
-	void setLibPaths(char *prop);
-	void setModulePaths(char *prop);
+	static void disconnectAll();
+	void create_transformation(char *transformationQuery);
+	char *transform_data(char *data);	
+	static void setUriPaths(char *prop);
+	static void setLibPaths(char *prop);
+	static void setModulePaths(char *prop);
 };
