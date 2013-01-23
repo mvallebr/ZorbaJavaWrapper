@@ -1,1 +1,20 @@
-{"id":"100000949105816","name":"Walter Bindilatti Jr.","first_name":"Walter","last_name":"Bindilatti Jr.","link":"http://www.facebook.com/walbinjr","username":"walbinjr","hometown":{"id":"108105659222437","name":"Rio Claro, Sao Paulo"},"location":{"id":"112047398814697","name":"São Paulo, Brazil"},"gender":"male","timezone":-2,"locale":"pt_BR","languages":[{"id":"106059522759137","name":"English"}],"verified":true,"updated_time":"2012-11-13T18:31:06+0000","interested_in":["female"],"relationship_status":"Married","significant_other":{"name":"Karla Anan","id":"100000316327177"},"favorite_teams":[{"id":"92774416228","name":"Baltimore Ravens"},{"id":"74947776908","name":"Orlando Magic"},{"id":"344366709466","name":"Palmeiras Oficial"}]}
+ {"id":19,
+ "birthDate":"Mar 14, 1959 12:00:00 AM",
+ "gender":"M",
+ "name":"Flavio Rossini",
+ "maritalStatus":"Casado",
+ "zipCode":"06452125",
+ "educationId":"4",
+ "educationName":"Mestrado",
+ "userEmails":[{"email":"flavio.rossini@a7capital.com.br"}],
+ "userMsisdn":[
+ 	{"countryCode":55,"areaCode":11,
+ 	"mobileNumber":69604444,
+ 	"msisdnFullNumber":551169604444,
+ 	"operatorName":"Tim"}
+ 	],
+ "cpf":"05558924845",
+ "cookieIds":["5dc133d2-c12f-4e4b-82c7-24213ff06e75"],
+ "msisdn":[551169604444],
+ "emails":["flavio.rossini@a7capital.com.br"]
+ }

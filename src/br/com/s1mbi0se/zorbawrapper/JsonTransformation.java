@@ -152,7 +152,16 @@ public class JsonTransformation {
 		if (zorbaWrapper == null)
 			throw new JsonTransformationException(
 					"Instance not created, please connect first");
-		return zorbaWrapper.transform_data(origin);
+		String result = null;
+		try {
+			result = zorbaWrapper.transform_data(origin);
+			if (result
+					.equalsIgnoreCase("<?xml version=\"1.0\" encoding=\"UTF-8\"?>\nnull"))
+				return null;
+		} catch (Throwable t) {
+			throw new JsonTransformationException(t);
+		}
+		return result;
 	}
 
 	public String transform(InputStream origin) throws IOException,

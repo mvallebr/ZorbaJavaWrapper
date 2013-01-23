@@ -14,7 +14,7 @@ public class TestBasicTransformations {
 	public void testTransform() throws JsonTransformationException, IOException {
 		try {
 			InputStream query = TestBasicTransformations.class
-					.getResourceAsStream("/query.json");
+					.getResourceAsStream("/query.xq");
 			JsonTransformation jsonTransformation = new JsonTransformation(
 					query);
 
@@ -26,10 +26,10 @@ public class TestBasicTransformations {
 			String o2 = JsonTransformation.readFile(originData2);
 			for (int i = 0; i < 100; i++) {
 				System.out.println("i=" + i);
-				System.out.println("Transformation result 1 = "
-						+ jsonTransformation.transform(o1));
-				System.out.println("Transformation result 2 = "
-						+ jsonTransformation.transform(o2));
+				System.out.println("Transformation result 1 = '"
+						+ jsonTransformation.transform(o1)+"'");
+				System.out.println("Transformation result 2 = '"
+						+ jsonTransformation.transform(o2)+"'");
 			}
 		} catch (Throwable t){
 			t.printStackTrace();
