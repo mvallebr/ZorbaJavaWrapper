@@ -1,5 +1,7 @@
 #!/bin/sh
 
+set -v on
+
 export TEMP_FOLDER="/tmp/squeeze/"
 export JAVA_DISTRO_BIN=jdk-6u38-linux-i586.bin
 export JAVA_DISTRO_FOLDER=$HOME/Downloads
@@ -22,7 +24,7 @@ $CHROOTCMD bash -c "cd /tmp/zorbaroot/ && wget --no-check-certificate https://la
 $CHROOTCMD bash -c "cd /tmp/zorbaroot/ && tar -zxvf zorba-src-2.7.0.tar.gz" 
 
 $CHROOTCMD mkdir -p /tmp/zorbaroot/zorba-build
-$CHROOTCMD bash -c "cd /tmp/zorbaroot/zorba-build && cmake  -DCMAKE_BUILD_TYPE=RELEASE -build /zorba-build /zorba-2.7.0/"
+$CHROOTCMD bash -c "cd /tmp/zorbaroot/zorba-build && cmake  -DCMAKE_BUILD_TYPE=RELEASE -build /tmp/zorbaroot/zorba-build /tmp/zorbaroot/zorba-2.7.0/"
 $CHROOTCMD bash -c "cd /tmp/zorbaroot/zorba-build && make"
 
 #copy java
