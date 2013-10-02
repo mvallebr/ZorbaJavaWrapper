@@ -4,11 +4,14 @@ import java.io.IOException;
 import java.io.InputStream;
 
 import org.junit.Test;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import br.com.s1mbi0se.zorbawrapper.JsonTransformation;
 import br.com.s1mbi0se.zorbawrapper.JsonTransformationException;
 
 public class TestBasicTransformations {
+    private final Logger log = LoggerFactory.getLogger(TestBasicTransformations.class);
 
 	@Test
 	public void testTransform() throws JsonTransformationException, IOException {
@@ -25,17 +28,16 @@ public class TestBasicTransformations {
 			String o1 = JsonTransformation.readFile(originData1);
 			String o2 = JsonTransformation.readFile(originData2);
 			for (int i = 0; i < 100; i++) {
-				System.out.println("i=" + i);
-				System.out.println("Transformation result 1 = '"
-						+ jsonTransformation.transform(o1)+"'");
-				System.out.println("Transformation result 2 = '"
+				log.info("i=" + i
+				        + "\nTransformation result 1 = '"
+						+ jsonTransformation.transform(o1)+"'"
+						+ "\nTransformation result 2 = '"
 						+ jsonTransformation.transform(o2)+"'");
 			}
 		} catch (Throwable t){
-			t.printStackTrace();
+			log.error(t.getMessage(), t);
 		} finally {
 			JsonTransformation.finishAll();
-			System.exit(0);
 		}
 	}
 }

@@ -120,7 +120,7 @@ void ZorbaWrapper::create_transformation(char *transformationQuery) {
 
 char *
 ZorbaWrapper::transform_data(char *data) {
-	std::cout << "transform_data " << data << "\n";
+	//std::cout << "transform_data " << data << "\n";
 	std::cout.flush();
 	if (lQuery==NULL)
 		throw "query cannot be null when calling transform";

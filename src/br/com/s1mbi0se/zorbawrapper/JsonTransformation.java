@@ -11,9 +11,13 @@ import java.util.List;
 
 import org.apache.commons.io.FileUtils;
 import org.apache.commons.io.IOUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class JsonTransformation {
-	private static boolean librariesLoaded = false;
+    private final Logger log = LoggerFactory.getLogger(JsonTransformation.class);
+
+    private static boolean librariesLoaded = false;
 	private static boolean filesExtracted = false;
 	private static ZorbaWrapper zorbaWrapper;
 
@@ -47,7 +51,7 @@ public class JsonTransformation {
 
 	private String extractFile(String name) throws JsonTransformationException {
 		try {
-			System.out.println(" ==> Will extract file " + name);
+			log.info(" ==> Will extract file " + name);
 			InputStream in = getClass().getResourceAsStream(name);
 			if (in == null)
 				throw new JsonTransformationException(
@@ -57,9 +61,9 @@ public class JsonTransformation {
 			IOUtils.copy(in, out);
 			in.close();
 			out.close();
-			System.out.println(" ==> File extracted to "
+			log.info(" ==> File extracted to "
 					+ fileOut.getAbsolutePath());
-			System.out.println(" ============================================");
+			log.info(" ============================================");
 			System.out.flush();
 			return fileOut.getAbsolutePath();
 		} catch (Exception e) {
@@ -105,7 +109,7 @@ public class JsonTransformation {
 			fullPath = extractFile("/" + lib);
 			libsfp.add(fullPath);
 
-			System.out.println(" ----> DLL " + fullPath
+			log.info(" ----> DLL " + fullPath
 					+ " extracted successfully");
 			System.out
 					.println("===============================================");
@@ -116,13 +120,13 @@ public class JsonTransformation {
 		libsfp.add(fullPath);
 		System.out
 				.println(" ----> DLL " + fullPath + " extracted successfully");
-		System.out.println("===============================================");
+		log.info("===============================================");
 		try {
 
 			for (String lib : libsfp) {
 				fullPath = lib;
 				System.load(fullPath);// loading goes here
-				System.out.println(" ----> DLL " + fullPath
+				log.info(" ----> DLL " + fullPath
 						+ " loaded successfully");
 				System.out
 						.println("===============================================");
